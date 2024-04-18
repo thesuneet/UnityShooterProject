@@ -867,7 +867,7 @@ GameObject:
   - component: {fileID: 630467592}
   - component: {fileID: 630467591}
   m_Layer: 0
-  m_Name: wall
+  m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1038,6 +1038,7 @@ GameObject:
   - component: {fileID: 795378639}
   - component: {fileID: 795378638}
   - component: {fileID: 795378640}
+  - component: {fileID: 795378641}
   m_Layer: 0
   m_Name: GlobalReferences
   m_TagString: Untagged
@@ -1074,6 +1075,20 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &795378640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795378637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccfbeb56286cb714ea1a5a99720311a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletImpactEffectPrefab: {fileID: 8726087436090004126, guid: c2369decfb3cd12438f639f91f286835,
+    type: 3}
+--- !u!114 &795378641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1292,7 +1307,7 @@ RectTransform:
   m_GameObject: {fileID: 1164968118}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 435743997}
@@ -1322,7 +1337,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1501,7 +1516,7 @@ MonoBehaviour:
   shootingDelay: 0.2
   bulletsPerBurst: 3
   burstBulletsLeft: 0
-  spreadIntensity: 0
+  spreadIntensity: 0.1
   currentShootingMode: 2
 --- !u!1 &1774112220
 GameObject:
