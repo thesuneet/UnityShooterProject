@@ -10,7 +10,9 @@ public class Weapon : MonoBehaviour
     public float bulletVelocity = 30;
     public float bulletPrefabLifeTime = 3f;
 
-    public Camera playerCamera;
+    public GameObject muzzleEffect;
+
+    
 
     //shootig
     public bool isShooting, readyToShoot;
@@ -26,6 +28,8 @@ public class Weapon : MonoBehaviour
     //spread
     public float spreadIntensity;
 
+    private Animator animator;
+
     //shooting modes
     public enum ShootingMode
     {
@@ -40,6 +44,7 @@ public class Weapon : MonoBehaviour
     {
         readyToShoot = true;
         burstBulletsLeft = bulletsPerBurst;
+        animator = GetComponent<Animator>();
     }
 
 
@@ -73,6 +78,11 @@ public class Weapon : MonoBehaviour
     private void FireWeapon()
     {
         readyToShoot = false;
+
+        muzzleEffect.GetComponent<ParticleSystem>().Play();
+
+        animator.SetTrigger("RECOIL");
+        SoundManager.Instance.shootingSoundAK_47.Play();
 
         Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
 
@@ -112,7 +122,7 @@ public class Weapon : MonoBehaviour
     public Vector3 CalculateDirectionAndSpread()
     {
         //shooting from middle of the screen to see where we are pointing
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f,0.5f,0));
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f,0.5f,0));
         RaycastHit hit;
 
         Vector3 targetPoint;
