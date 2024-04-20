@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Weapon : MonoBehaviour
 {   
@@ -30,6 +31,14 @@ public class Weapon : MonoBehaviour
 
     private Animator animator;
 
+    // Loading
+    public float reloadTime;
+    public int magazineSize, bulletsLeft;
+    public bool isReloading;
+
+    
+
+
     //shooting modes
     public enum ShootingMode
     {
@@ -45,6 +54,9 @@ public class Weapon : MonoBehaviour
         readyToShoot = true;
         burstBulletsLeft = bulletsPerBurst;
         animator = GetComponent<Animator>();
+
+        bulletsLeft  = magazineSize;
+
     }
 
 
@@ -57,6 +69,12 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(bulletsLeft == 0 && isShooting)
+        {
+            SoundManager.Instance.emptyMagazineSoundAK_47.Play();
+        }
+
         if(currentShootingMode == ShootingMode.Auto)
         {
             //only true if holding left mouse button
@@ -68,15 +86,35 @@ public class Weapon : MonoBehaviour
             isShooting = Input.GetKeyDown(KeyCode.Mouse0);
         }
 
-        if(readyToShoot && isShooting)
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false)
+        {
+            Reload();
+        }
+
+        //automatic reload
+        if( readyToShoot && isShooting == false && isReloading ==  false && bulletsLeft <= 0 )
+        {
+            Reload();
+
+        }
+
+        if(readyToShoot && isShooting && bulletsLeft > 0)
         {
             burstBulletsLeft = bulletsPerBurst;
             FireWeapon();
+        }
+
+        if(AmmoManager.Instance.ammoDisplay != null)
+        {
+            AmmoManager.Instance.ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
         }
     }
 
     private void FireWeapon()
     {
+
+        bulletsLeft--;
+
         readyToShoot = false;
 
         muzzleEffect.GetComponent<ParticleSystem>().Play();
@@ -111,6 +149,23 @@ public class Weapon : MonoBehaviour
         }
 
         
+    }
+
+    private void Reload()
+    {
+
+        SoundManager.Instance.reloadSoundAK_47.Play();
+
+        isReloading= true;
+        Invoke("ReloadCompleted", reloadTime);
+
+    }
+
+    private void ReloadCompleted()
+    {
+        bulletsLeft =  magazineSize;
+        isReloading = false;
+
     }
 
     private void ResetShot()
