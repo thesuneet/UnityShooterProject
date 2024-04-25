@@ -17,7 +17,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip AK47_reload;
     public AudioClip M4_reload;
 
-    public AudioSource emptyMagazineSoundAK_47;
+    public AudioSource emptyMagazineSound;
     
    private void Awake()
    {

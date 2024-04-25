@@ -10,10 +10,12 @@ public class MouseMovements : MonoBehaviour
     float yRotation = 0f;
 
     public float topClamp = -90f;
-    public float bottomClamp = 90f; 
+    public float bottomClamp = 90f;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Locking the cursor to the middle of the screen and making it invisible
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -28,13 +30,12 @@ public class MouseMovements : MonoBehaviour
         xRotation -= mouseY;
 
         //Clamp rotation
-        xRotation = Mathf.Clamp(xRotation,topClamp,bottomClamp);
+        xRotation = Mathf.Clamp(xRotation, topClamp, bottomClamp);
 
         //Rotation around X axis(look left and right)
         yRotation += mouseX;
 
         //Apply rotations to our trransform
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
-        
     }
 }
