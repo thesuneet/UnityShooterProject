@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {   
     private CharacterController controller;
-    public float speed = 12f; 
-    public float gravity = -9.81f * 2;
-    public float jumpHeight = 3f;
+    public float speed = 5f;
+    public float gravity = -9.8f;
+    public float jumpHeight = 1f;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -29,46 +29,48 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Ground Check
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance,groundMask);
-        //resetting the default velocity
+        // Ground check
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        // Resetting the default velocity
         if(isGrounded && velocity.y <0)
         {
             velocity.y = -2f; 
         }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        //create move vector
-        Vector3 move = transform.right * x + transform.forward * z;//right = red arrow; forward = blue arrow
+        // Create move vector
+        Vector3 move = transform.right * x + transform.forward * z; //right = red axis; forward = blue axis
 
-        controller.Move(move*speed*Time.deltaTime);
+        controller.Move(move * speed * Time.deltaTime);
 
-        //check if player can jump
+        // Check if player can jump
         if(Input.GetButtonDown("Jump") && isGrounded)
         {
-            //actually jumping
+            // Going up
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        //falling down
-        velocity.y += gravity* Time.deltaTime;
+        // Falling down
+        velocity.y += gravity * Time.deltaTime;
 
-        //controlling the jump
+        // Executing the jump
         controller.Move(velocity * Time.deltaTime);
 
         if(lastPosition != gameObject.transform.position && isGrounded == true)
         {
             isMoving = true;
-            //for later
+            // For later use
 
         }
         else
         {
             isMoving= false;
-            //also later
+            // Also for later use
         }
-        lastPosition = gameObject.transform.position;
 
+        lastPosition = gameObject.transform.position;
     }
 }
